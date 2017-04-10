@@ -1,17 +1,18 @@
-﻿@model Backend.Models.LeagueView
+﻿@model Backend.Models.TournamentView
 
 @{
     ViewBag.Title = "Criar";
 }
 
-<h2>Criar Nova Liga</h2>
+<h2>Criar</h2>
 
-@using (Html.BeginForm("Create", "Leagues", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("Create", "Tournaments", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Liga</h4>
+        <h4>Torneios</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -30,7 +31,6 @@
                 </span>
             </div>
         </div>
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -21,6 +21,7 @@ namespace Domain
         [Required(ErrorMessage = "The Field {0} is required")]
         [StringLength(3, ErrorMessage = "The lenght for field {0} must be {1} characters", MinimumLength = 3)]
         [Index("Team_Initials_LeagueId_Index", IsUnique = true, Order = 1)]
+        [Display(Name = "Iniciais")]
         public string Initials { get; set; }
 
         [Index("Team_Name_LeagueId_Index", IsUnique = true, Order = 2)]

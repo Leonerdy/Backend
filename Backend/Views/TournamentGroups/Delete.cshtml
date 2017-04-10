@@ -1,4 +1,4 @@
-﻿@model Domain.Team
+﻿@model Domain.TournamentGroup
 
 @{
     ViewBag.Title = "Deletar";
@@ -6,17 +6,17 @@
 
 <h2>Deletar</h2>
 
-<h3>Você tem certeza que deseja deletar esse time?</h3>
+<h3>Você tem certeza que deseja deletar esse grupo do torneio?</h3>
 <div>
-    <h4>Time</h4>
+    <h4>Grupo do Torneio</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.League.Name)
+            @Html.DisplayNameFor(model => model.Tournament.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.League.Name)
+            @Html.DisplayFor(model => model.Tournament.Name)
         </dd>
 
         <dt>
@@ -25,22 +25,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Logo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Logo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Initials)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Initials)
         </dd>
 
     </dl>
