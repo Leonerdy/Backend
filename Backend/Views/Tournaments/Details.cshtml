@@ -23,12 +23,93 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Logo)
+           @if (!string.IsNullOrEmpty(Model.Logo))
+           {
+            <img src="@Url.Content(Model.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+           }
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.TournamentId }) |
-    @Html.ActionLink("Voltar para a lista", "Index")
+    @Html.ActionLink("Editar Torneio", "Edit", new { id = Model.TournamentId }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Criar Grupo", "CreateGroup", new { id = Model.TournamentId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Criar Data", "CreateDate", new { id = Model.TournamentId }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Voltar para a lista", "Index", new { }, new { @class = "btn btn-sucess" })
 </p>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Grupos</h4>
+        @if (Model.TournamentGroups.Count == 0)
+        {
+            <h5>Não há grupos registrados ainda</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TournamentGroups.FirstOrDefault().Name)
+                    </th>
+                    <th>
+                        # Teams
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.TournamentGroups.OrderBy(g => g.Name))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TournamentTeams.Count)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "EditGroup", new { id = item.TournamentGroupId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Detalhes", "DetailsGroup", new { id = item.TournamentGroupId }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Deletar", "DeleteGroup", new { id = item.TournamentGroupId }, new { @class = "btn btn-danger", onclick = "return confirm('Você tem certeza que deseja deletar?');" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        }    </div>
+    <div class="col-md-6">
+        <h4>Datas</h4>
+        @if (Model.Dates.Count == 0)
+        {
+            <h5>Não há datas registradas ainda</h5>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Dates.FirstOrDefault().Name)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Dates.OrderBy(g => g.Name))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "EditDate", new { id = item.DateId }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Detalhes", "DetailsDate", new { id = item.DateId }, new { @class = "btn btn-info" })
+                            @Html.ActionLink("Deletar", "DeleteDate", new { id = item.DateId }, new { @class = "btn btn-danger", onclick = "return confirm('Você tem certeza que deseja deletar?');" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        }
+    </div>
+    
+</div>

@@ -7,11 +7,10 @@ namespace Domain
     public class Tournament
     {
         [Key]
-
         public int TournamentId { get; set; }
 
-        [Required(ErrorMessage = "The Field {0} is required")]
-        [MaxLength(50, ErrorMessage = "The max lenght for field {0} is {1} characters")]
+        [Required(ErrorMessage = "The field {0} is required")]
+        [MaxLength(50, ErrorMessage = "The maximun length for field {0} is {1} characters")]
         [Index("Tournament_Name_Index", IsUnique = true)]
         [Display(Name = "Torneios")]
         public string Name { get; set; }
@@ -19,6 +18,15 @@ namespace Domain
         [DataType(DataType.ImageUrl)]
         public string Logo { get; set; }
 
-        public virtual ICollection<TournamentGroup> Groups { get; set; }
+        [Display(Name = "Is Active?")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Order")]
+        public int Order { get; set; }
+
+        public virtual ICollection<TournamentGroup> TournamentGroups { get; set; }
+
+        public virtual ICollection<Date> Dates { get; set; }
     }
 }
+

@@ -1,19 +1,22 @@
-﻿@model Backend.Models.LeagueView
+﻿@model Domain.Date
 
 @{
-    ViewBag.Title = "Criar";
+    ViewBag.Title = "Create";
 }
 
-<h2>Criar Nova Liga</h2>
+<h2>Criar Data</h2>
 
-@using (Html.BeginForm("Create", "Leagues", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Liga</h4>
+        <h4>Date</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.TournamentId)
+
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -22,27 +25,17 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LogoFile, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <span class="btn btn-default btn-file">
-                    @Html.TextBoxFor(modelo => modelo.LogoFile, new { type = "file" })
-                </span>
-            </div>
-        </div>
-
-
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Criar" class="btn btn-primary" />
+                @Html.ActionLink("Voltar para Torneio", "Details", new { id = Model.TournamentId }, new { @class = "btn btn-sucess" })
+
+
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Voltar para a lista", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

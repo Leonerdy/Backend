@@ -7,7 +7,7 @@
 <h2>Ligas</h2>
 
 <p>
-    @Html.ActionLink("Criar nova Liga", "Create")
+    @Html.ActionLink("Criar nova Liga", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            # Times
         </th>
         <th></th>
     </tr>
@@ -33,9 +36,12 @@
 
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.LeagueId }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.LeagueId }) |
-            @Html.ActionLink("Deletar", "Delete", new { id=item.LeagueId })
+            @Html.DisplayFor(modelItem => item.Teams.Count)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id = item.LeagueId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalhes", "Details", new { id = item.LeagueId }, new { @class = "btn btn-info" })
+            @Html.ActionLink("Deletar", "Delete", new { id = item.LeagueId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

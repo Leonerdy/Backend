@@ -14,6 +14,136 @@ namespace Backend.Controllers
     {
         private DataContextLocal db = new DataContextLocal();
 
+        public async Task<ActionResult> DeleteTeam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var team = await db.Teams.FindAsync(id);
+            if (team == null)
+            {
+                return HttpNotFound();
+            }
+            db.Teams.Remove(team);
+            await db.SaveChangesAsync();
+            return RedirectToAction(string.Format("Details/{0}", team.LeagueId));
+        }
+        public async Task<ActionResult> EditTeam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var team = await db.Teams.FindAsync(id);
+            if (team == null)
+            {
+                return HttpNotFound();
+            }
+            var view = ToView(team);
+            return View(view);
+        }
+
+       
+
+        // POST: Teams/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditTeam(TeamView view)
+        {
+            if (ModelState.IsValid)
+            {
+                var pic = view.Logo;
+                var folder = "~/Content/Logos";
+
+                if (view.LogoFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.LogoFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var team = ToTeam(view);
+                team.Logo = pic;
+                db.Entry(team).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}", view.LeagueId));
+            }
+            ViewBag.LeagueId = new SelectList(db.Leagues, "LeagueId", "Name", view.LeagueId);
+            return View(view);
+        }
+        public async Task<ActionResult> CreateTeam(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var league = await db.Leagues.FindAsync(id);
+            if (league == null)
+            {
+                return HttpNotFound();
+            }
+
+            var view = new TeamView { LeagueId = league.LeagueId, };
+            return View(view);
+        }
+
+        // POST: Teams/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateTeam(TeamView view)
+        {
+            if (ModelState.IsValid)
+            {
+                var pic = string.Empty;
+                var folder = "~/Content/Logos";
+
+                if (view.LogoFile != null)
+                {
+                    pic = FilesHelper.UploadPhoto(view.LogoFile, folder);
+                    pic = string.Format("{0}/{1}", folder, pic);
+                }
+
+                var team = ToTeam(view);
+                team.Logo = pic;
+                db.Teams.Add(team);
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}", view.LeagueId));
+            }
+
+            
+            return View(view);
+        }
+        private Team ToTeam(TeamView view)
+        {
+            return new Team
+            {
+                Initials = view.Initials,
+                League = view.League,
+                LeagueId = view.LeagueId,
+                Logo = view.Logo,
+                Name = view.Name,
+                TeamId = view.TeamId
+            };
+        }
+
+        private TeamView ToView(Team team)
+        {
+            return new TeamView
+            {
+                Initials = team.Initials,
+                League = team.League,
+                LeagueId = team.LeagueId,
+                Logo = team.Logo,
+                Name = team.Name,
+                TeamId = team.TeamId
+            };
+
+        }
+
         // GET: Leagues
         public async Task<ActionResult> Index()
         {

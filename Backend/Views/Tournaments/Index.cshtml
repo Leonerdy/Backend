@@ -7,7 +7,7 @@
 <h2>Torneios</h2>
 
 <p>
-    @Html.ActionLink("Criar novo Torneio", "Create")
+    @Html.ActionLink("Criar novo Torneio", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,18 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order)
+        </th>
+        <th>
+           # Grupos
+        </th>
+        <th>
+            # Dates
         </th>
         <th></th>
     </tr>
@@ -32,9 +44,21 @@
             }
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.TournamentId }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.TournamentId }) |
-            @Html.ActionLink("Deletar", "Delete", new { id=item.TournamentId })
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TournamentGroups.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dates.Count)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.TournamentId }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Detalhes", "Details", new { id=item.TournamentId }, new { @class = "btn btn-info" }) 
+            @Html.ActionLink("Deletar", "Delete", new { id=item.TournamentId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }
