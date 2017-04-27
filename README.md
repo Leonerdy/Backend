@@ -1,4 +1,4 @@
 # Backend
-Solução de projetos de futebol
+Backend de uma aplicação para apostas de placar de futebol
 
-Projeto voltado para a criação de uma website para torneios de futebol
+Toda a administração do site e todos os relacionamentos das classes.
